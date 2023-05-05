@@ -1,0 +1,98 @@
+.group {
+    display: flex;
+    justify-content: space-between;
+    padding: 5vh;
+    height: 100%;
+
+    .groupInfo {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 30%;
+
+        h1 {
+            font-size: 4vh;
+            line-height: 6vh;
+
+            span {
+                font-weight: 700;
+                line-height: 7vh;
+            }
+        }
+
+        .teacher {
+            background-color: #EFF1FF;
+            border-radius: 3vh;
+            padding: 4vh;
+            position: relative;
+
+            .teacherPhoto {
+                position: absolute;
+                top: -40%;
+                left: 28%;
+                width: 20vh;
+                aspect-ratio: 1 / 1;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                border: 1vh solid #FFFFFF;
+                border-radius: 50%;
+            }
+
+            p {
+                margin-top: 5vh;
+                font-size: 3vh;
+                line-height: 4vh;
+                text-align: center;
+
+                span {
+                    font-weight: 700;
+                    line-height: 7vh;
+                }
+            }
+        }
+    }
+
+    .students {
+        width: 60%;
+        background-color: #EFF1FF;
+        border-radius: 3vh;
+        padding: 4vh;
+        overflow-y: scroll;
+
+        h3 {
+            font-size: 4vh;
+            margin-bottom: 4vh;
+            font-weight: 700;
+        }
+
+        .studentGrid {
+            display: flex;
+            gap: 4vh;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+
+            .student {
+                width: 20%;
+
+                .studentPhoto {
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    width: 10vh;
+                    aspect-ratio: 1/1;
+                    border-radius: 50%;
+                    border: 0.5vh solid #FFFFFF;
+                    margin: 0 auto;
+                }
+
+                p {
+                    text-align: center;
+                    font-size: 2vh;
+                    margin-top: 2vh;
+                }
+            }
+        }
+    }
+}

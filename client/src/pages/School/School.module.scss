@@ -1,0 +1,106 @@
+.school {
+    padding: 5vh;
+
+    .hero {
+        display: flex;
+        justify-content: space-between;
+
+        .schoolInfo {
+            width: 40%;
+
+            h1 {
+                font-size: 6vh;
+                margin-bottom: 5vh;
+                font-weight: 600;
+            }
+
+            p {
+                font-size: 2.5vh;
+                white-space: 'pre-wrap';
+            }
+        }
+
+        .statistics {
+            width: 50%;
+            text-align: center;
+
+            .schoolPhoto {
+                width: 100%;
+                height: 50vh;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                border: 3vh solid #EFF1FF;
+                border-radius: 3vh;
+            }
+
+            h3 {
+                font-size: 4vh;
+                font-weight: 600;
+                margin: 4vh 0;
+            }
+
+            p {
+                font-size: 2.5vh;
+                line-height: 5vh;
+
+                span {
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+
+    .contacts {
+        margin: 5vh 0;
+
+        h3 {
+            text-align: center;
+            font-size: 4vh;
+            font-weight: 600;
+            margin: 10vh 0;
+        }
+
+        .contactsContainer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            p {
+                font-size: 3vh;
+                line-height: 6vh;
+
+                span {
+                    font-weight: 600;
+                }
+            }
+
+            iframe {
+                width: 50%;
+                height: 50vh;
+            }
+        }
+    }
+
+    .galery {
+        margin: 5vh 0;
+        max-height: 500px;
+        // width: 60%;
+
+        h3 {
+            text-align: center;
+            font-size: 4vh;
+            font-weight: 600;
+            margin: 10vh 0;
+        }
+
+        .carousel {
+            width: 60%;
+            margin: 0 auto;
+        }
+
+        .carousel-root {
+            height: 100px; /* Высота для экранов от 768px и выше */
+        }
+    }
+}

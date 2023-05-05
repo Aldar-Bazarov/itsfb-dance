@@ -1,0 +1,76 @@
+.loginPage {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    justify-content: space-between;
+
+    .authImage {
+        display: inline-block;
+        background-image: url('../../assets/images/auth-image.png');
+        background-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        height: 100%;
+        width: auto;
+        margin: 50px 0px 50px 5%;
+    }
+
+    form {
+        margin: 0 10% 0 0;
+        display: flex;
+        flex-direction: column;
+
+        h2 {
+            font-size: 3vw;
+            font-weight: 700;
+            align-self: center;
+            margin-bottom: 5vh;
+        }
+
+        label {
+            font-size: 1vw;
+            line-height: 2vw;
+            margin-left: 0.5vw;
+        }
+
+        input {
+            width: 40vh;
+            height: 6vh;
+            background: #F9F9F9;
+            border: 1px solid #B9B9B9;
+            padding: 10px;
+            border-radius: 0.5vw;
+            margin-bottom: 2vh;
+            font-size: 1.5vw;
+            line-height: 1vw;
+        }
+
+        .loginSubmit {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3vh;
+            align-items: center;
+
+            p {
+                font-size: 1vw;
+                line-height: 1.2vw;
+            }
+
+            button {
+                padding: 1vw 1.7vw;
+                background: #6F50EB;
+                border: 1px solid #B9B9B9;
+                border-radius: 0.5vw;
+                font-size: 1.2vw;
+                font-weight: 700;
+                color: white;
+                transition: transform 0.5s ease;
+
+                &:hover {
+                    cursor: pointer;
+                    transform: translate(0px, -5px);
+                }
+            }
+        }
+    }
+}

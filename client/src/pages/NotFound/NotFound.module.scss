@@ -1,0 +1,39 @@
+.notFound {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    padding: 10vh;
+
+    h1 {
+        text-align: center;
+        font-size: 4vh;
+        line-height: 6vh;
+        font-weight: 700;
+    }
+
+    .notFoundImage {
+        width: 70%;
+        height: 60%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+
+    .homeButton {
+        background-color: #c590fd;
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        color: #FFFFFF;
+        font-size: 3vh;
+        border-radius: 4vh;
+        text-decoration: none;
+        padding: 3vh;
+
+        &:hover {
+            transform: translate(0px, -5px);
+            transition: all 0.1s ease-in-out;
+        }
+    }
+}

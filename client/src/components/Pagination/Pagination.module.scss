@@ -1,0 +1,26 @@
+.pagination {
+    display: flex;
+    border: 2px solid #6F50EB;
+    border-radius: 2vh;
+    overflow: hidden;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    .page,
+    .currentPage {
+        font-size: 2vh;
+        background-color: #FFFFFF;
+        padding: 2vh;
+        
+        &:not(:last-child) {
+            border-right: 2px solid #6F50EB;
+        }
+    }
+
+    .currentPage {
+        background-color: #6F50EB;
+        color: #FFFFFF;
+    }
+}
