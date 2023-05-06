@@ -3,11 +3,11 @@ const { User } = require('../models/models');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
-const generateJwt = (id, email, role) => {
+const generateJwt = (id, email, role, firstname, secondname) => {
   return jwt.sign(
-    { id, email, role },
+    { id, email, role, firstname, secondname },
     process.env.SECRET_KEY,
-    { expiresIn: '24h' }
+    { expiresIn: 60 * 10}
   );
 }
 
@@ -31,7 +31,7 @@ class UserController {
       // создаем нового пользователя в базе данных
       const newUser = await User.create({ firstname, secondname, email, password: hashedPassword, role });
 
-      const token = generateJwt(newUser.id, email, newUser.role);
+      const token = generateJwt(newUser.id, email, newUser.role, newUser.firstname, newUser.secondname);
 
       // возвращаем ответ с успешной регистрацией и данными нового пользователя
       return res.status(201).json({message: 'Регистрация прошла успешно', token});
@@ -58,10 +58,10 @@ class UserController {
       }
 
       // Создание токена с payload'ом, содержащим ID пользователя
-      const token = generateJwt(user.id, user.email, user.role);
+      const token = generateJwt(user.id, user.email, user.role, user.firstname, user.secondname);
 
       // Отправка успешного ответа
-      return res.status(200).json({token});
+      return res.status(200).json({message: 'Успешный вход в аккаунт!', token});
     } catch (err) {
       console.log(err);
       return next(ApiError.internal("Непредвиденная ошибка!"));

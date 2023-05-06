@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  username: '',
+  firstName: '',
+  secondName: '',
   email: '',
   role: '',
   isAuthenticated: false,
@@ -12,14 +13,15 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser(state, action) {
-      const { username, email, role } = action.payload;
-      state.username = username;
-      state.email = email;
-      state.role = role;
+      state.firstName = action.payload.firstname;
+      state.secondName = action.payload.secondname;
+      state.email = action.payload.email;
+      state.role = action.payload.role;
       state.isAuthenticated = true;
     },
     clearUser(state) {
-      state.username = '';
+      state.firstName = '';
+      state.secondName = '';
       state.email = '';
       state.role = '';
       state.isAuthenticated = false;
@@ -27,7 +29,5 @@ const userSlice = createSlice({
   },
 });
 
-// Экшн креэйторы генерируются для каждого случая функции-редьюсера
 export const { setUser, clearUser } = userSlice.actions;
-
 export default userSlice.reducer;

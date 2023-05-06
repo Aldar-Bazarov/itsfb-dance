@@ -10,7 +10,7 @@ import { truncateString } from '../../utils/string'
 
 const News = () => {
   const [news, setNews] = useState([]);
-  const [limit] = useState(4);
+  const [limit] = useState(3);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
 

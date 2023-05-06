@@ -1,8 +1,8 @@
 .pagination {
-    display: flex;
+    display: inline-block;
+    overflow: hidden;
     border: 2px solid #6F50EB;
     border-radius: 2vh;
-    overflow: hidden;
 
     &:hover {
         cursor: pointer;
@@ -10,6 +10,7 @@
 
     .page,
     .currentPage {
+        display: inline-block;
         font-size: 2vh;
         background-color: #FFFFFF;
         padding: 2vh;

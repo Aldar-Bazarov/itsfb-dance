@@ -49,7 +49,7 @@ const MySchool = () => {
             <p>Телефон:<br /><span>📱 {school.phoneNumber}</span></p>
             <p>Почта:<br /><span>📬 {school.email}</span></p>
           </div>
-          <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3Aae567a140221f35614651cb1d3ddd7f923a6a17b36719d46c91ac791ee380b7c&amp;source=constructor" width="600" height="400" frameborder="0" />
+          <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3Aae567a140221f35614651cb1d3ddd7f923a6a17b36719d46c91ac791ee380b7c&amp;source=constructor" width="600" height="400" frameBorder="0" />
         </div>
       </div>
       <div className={styles.galery}>

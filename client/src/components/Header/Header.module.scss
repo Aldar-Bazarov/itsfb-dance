@@ -3,14 +3,63 @@
     justify-content: space-between;
     flex-direction: column;
     align-items: center;
-    width: 155px;
+    width: 5vw;
     height: 100vh;
-    padding: 50px;
-    row-gap: 20px;
+    padding: 5vh;
+    row-gap: 2vh;
+
+    .icon {
+        width: 3vh;
+        aspect-ratio: 1/1;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    #logo {
+        width: 6vh;
+        background-image: url('../../assets/images/header/Pulse.svg');
+    }
+
+    #logout {
+        background-image: url('../../assets/images/header/Logout.png');
+    }
 
     .navigation {
         display: flex;
         flex-direction: column;
-        row-gap: 20px;
+        row-gap: 2vh;
+
+        .icon {
+            width: 3vh;
+            aspect-ratio: 1/1;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        #news {
+            background-image: url('../../assets/images/header/News.png');
+        }
+
+        #events {
+            background-image: url('../../assets/images/header/Events.png');
+        }
+
+        #school {
+            background-image: url('../../assets/images/header/School.png');
+        }
+
+        #profile {
+            background-image: url('../../assets/images/header/Profile.png');
+        }
+
+        #group {
+            background-image: url('../../assets/images/header/Group.png');
+        }
+
+        #schedule {
+            background-image: url('../../assets/images/header/Schedule.png');
+        }
     }
 }

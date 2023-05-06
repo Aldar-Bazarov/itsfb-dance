@@ -7,11 +7,9 @@ const profiles = [];
 for (let i = 0; i < 16; i++) {
   profiles.push({
     name: faker.internet.userName(),
-    photo: `https://picsum.photos/200/200?random=${i}`,
+    photo: `/images/kid.jpg`,
   });
 }
-
-console.log(profiles);
 
 const group = {
     name: "Группа №2 (7-10 лет)",
