@@ -1,0 +1,47 @@
+h3 {
+    font-size: 3vh;
+    font-weight: 600;
+    margin-bottom: 2vh;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    margin: 1vh 0;
+
+    label {
+        margin-bottom: 1vh;
+
+        &.fileUpload {
+            width: 50%;
+            background-color: #F9F9F9;
+            border: 1px solid #B9B9B9;
+            padding: 2vh;
+            border-radius: 0.5vw;
+            display: inline-block;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+    }
+
+    input {
+        height: 5vh;
+        background-color: #F9F9F9;
+        border: 1px solid #B9B9B9;
+        padding: 2vh;
+        border-radius: 0.5vw;
+        margin-bottom: 2vh;
+        font-size: 1.5vw;
+        line-height: 1.5vw;
+
+        &[type="file"] {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+    }
+
+    .submitButton {
+        padding: 2vh;
+    }
+}

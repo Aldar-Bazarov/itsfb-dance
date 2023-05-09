@@ -11,6 +11,7 @@
     justify-content: space-between;
     color: #000000;
     text-decoration: none;
+    cursor: pointer;
 
     .eventTitle {
         font-weight: 700;
@@ -20,7 +21,7 @@
     .eventDate,
     .eventTime {
         display: inline-block;
-        margin-right: 5vh;
+        margin-right: 2vh;
     }
 
     .eventImage {

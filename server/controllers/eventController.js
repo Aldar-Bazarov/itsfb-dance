@@ -1,81 +1,113 @@
 const { Event } = require('../models/models');
-const ApiError = require('../error/ApiError')
+const ApiError = require('../error/ApiError');
+const uuid = require('uuid');
+const path = require('path');
+const sequelize = require('../db')
+const { Op } = require('sequelize');
 
 class EventController {
     async create(req, res, next) {
         try {
-            const { name } = req.body;
-            const school = await Event.create({ name });
-            return res.status(200).json({ school });
+            const { title, description, date, time, place } = req.body;
+
+            if (!req.files) {
+                return next(ApiError.badRequest('Изображение не загружено!'))
+            }
+            const { img } = req.files;
+            const fileName = uuid.v4() + ".jpg";
+            await img.mv(path.resolve(__dirname, '..', 'static', fileName));
+            const event = await Event.create({ title, description, date, time, place, img: fileName });
+
+            return res.status(201).json({ event });
+        } catch (err) {
+            console.log(err);
+            return next(ApiError.internal("Не удалось создать мероприятие в базе данных"));
+        }
+    };
+
+    async getClosestEvent(req, res, next) {
+        try {
+            let { page, limit } = req.query;
+            page = page || 1;
+            limit = limit || 10;
+            let offset = page * limit - limit;
+            
+            const allEvents = await Event.findOne({
+                limit,
+                offset,
+                where: {
+                  date: { [Op.gte]: new Date() }
+                },
+                order: [['date', 'ASC']],
+            });
+
+            res.status(200).json(allEvents);
         } catch (err) {
             console.error(err);
-            return next(ApiError.internal("Ошибка: Не удалось создать школу в базе данных!"))
+            return next(ApiError.internal("Ошибка: Не удалось получить мероприятия из базы данных!"))
         }
     };
 
     async getAll(req, res, next) {
         try {
-            const schools = await Event.findAll();
-            res.status(200).json(schools);
+            let { page, limit } = req.query;
+            page = page || 1;
+            limit = limit || 10;
+            let offset = page * limit - limit;
+            
+            const allEvents = await Event.findAndCountAll({
+                limit,
+                offset,
+                where: {
+                  date: { [Op.gte]: new Date() }
+                },
+                order: [['date', 'ASC']],
+            });
+
+            res.status(200).json(allEvents);
         } catch (err) {
             console.error(err);
-            return next(ApiError.internal("Ошибка: Не удалось получить школы из базы данных!"))
+            return next(ApiError.internal("Ошибка: Не удалось получить мероприятия из базы данных!"))
         }
     }
 
-    async getOne(req, res, next) {
+    async getAllOld(req, res, next) {
         try {
-            const { id } = req.params;
-            const school = await Event.findOne({ where: { id } });
-            if (school) {
-                res.status(200).json(school);
-            } else {
-                return next(ApiError.badRequest(`Ошибка: Школа с id:${id} не найдена!`))
-            }
+            let { page, limit } = req.query;
+            page = page || 1;
+            limit = limit || 10;
+            let offset = page * limit - limit;
+            
+            const allEvents = await Event.findAndCountAll({
+                limit,
+                offset,
+                where: {
+                    date: {
+                      [Op.lt]: new Date(),
+                    }
+                },
+                order: [['date', 'ASC']],
+            });
+
+            res.status(200).json(allEvents);
         } catch (err) {
             console.error(err);
-            return next(ApiError.internal("Ошибка: Не удалось получить школы из базы данных!"))
+            return next(ApiError.internal("Ошибка: Не удалось получить мероприятия из базы данных!"))
         }
     }
 
     async delete(req, res, next) {
         try {
             const { id } = req.params;
-            const school = await Event.findByPk(id);
-            if (!school) {
-                return next(ApiError.badRequest(`Ошибка: Школа с id:${id} не найдена!`))
+            const event = await Event.findByPk(id);
+            if (!event) {
+                return next(ApiError.badRequest(`Ошибка: Мероприятие с id:${id} не найдена!`))
             }
-            await school.destroy();
-            return res.status(204).send();
+            await event.destroy();
+            return res.status(200).json({ message: 'Мероприятие успешно удалено' });
         } catch (err) {
             console.error(err);
-            return next(ApiError.internal("Ошибка: Не удалось удалить школу из базы данных!"))
-        }
-    }
-
-    async update(req, res, next) {
-        try {
-            const { id } = req.params;
-            const { name } = req.body;
-
-            const school = await Event.findByPk(id);
-
-            if (!school) {
-                return next(ApiError.badRequest(`Школа с id:${id} не найдена`));
-            }
-
-            // Обновляем данные
-            await school.update({
-                name: name,
-            });
-
-            // Сохраняем изменения в базе данных
-            await school.save();
-
-            return res.status(200).json(school);
-        } catch (err) {
-            console.error(err);
-            res.status(500).json({ message: 'Internal server error' });
+            return next(ApiError.internal("Ошибка: Не удалось удалить мероприятие из базы данных!"))
         }
     }
 }

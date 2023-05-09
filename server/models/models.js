@@ -20,7 +20,8 @@ const Event = sequelize.define('event', {
     title: { type: DataTypes.STRING, allowNull: false },
     description: { type: DataTypes.TEXT, allowNull: false },
     img: { type: DataTypes.STRING, allowNull: false },
-    date: { type: DataTypes.DATE, allowNull: false },
+    date: { type: DataTypes.DATEONLY, allowNull: false },
+    time: { type: DataTypes.TIME, allowNull: false },
     place: { type: DataTypes.STRING, allowNull: false }
 });
 
@@ -56,9 +57,6 @@ const Schedule = sequelize.define('schedule', {
 
 School.hasMany(News);
 News.belongsTo(School);
-
-School.hasMany(Event);
-Event.belongsTo(School);
 
 School.hasMany(Group, { foreignKey: { allowNull: false } });
 Group.belongsTo(School);

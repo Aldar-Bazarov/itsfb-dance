@@ -16,8 +16,8 @@ const Admin = () => {
       <button onClick={() => setEventVisible(true)}>
         Добавить событие
       </button>
-      <CreateNews active={newsVisible} setActive={setNewsVisible}/>
-      <CreateEvent active={eventVisible} setActive={setEventVisible}/>
+      {newsVisible && <CreateNews active={newsVisible} setActive={setNewsVisible}/>}
+      {eventVisible && <CreateEvent active={eventVisible} setActive={setEventVisible}/>}
     </div>
   )
 }

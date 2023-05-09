@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import styles from './CreateNews.module.scss';
-import Modal from '../Modal/Modal';
 import { createNews } from '../../../api/newsApi';
+import Modal from '../Modal/Modal';
+import styles from './CreateNews.module.scss';
 
 const CreateNews = ({ active, setActive }) => {
     const [title, setTitle] = useState('');

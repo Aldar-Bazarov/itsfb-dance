@@ -10,7 +10,6 @@ import Admin from './pages/Admin/Admin';
 import News from './pages/News/News';
 import OneNews from './pages/OneNews/OneNews';
 import Events from './pages/Events/Events';
-import Event from './pages/Event/Event';
 import School from './pages/School/School';
 import Profile from './pages/Profile/Profile';
 import Login from './pages/Login/Login';
@@ -40,7 +39,6 @@ const App = () => {
         <Route index element={<News />} />
         <Route path='/news/:id' element={<OneNews />} />
         <Route path='/events' element={<Events />} />
-        <Route path='/events/:id' element={<Event />} />
         <Route path='/school' element={<School />} />
         <Route path='/profile' element={
           <RequireAuth>

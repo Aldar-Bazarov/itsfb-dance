@@ -30,7 +30,6 @@ class NewsController {
             limit = limit || 10;
             let offset = page * limit - limit;
             const allNews = await News.findAndCountAll({limit, offset});
-            console.log(allNews);
             res.status(200).json(allNews);
         } catch (err) {
             console.error(err);
@@ -58,14 +57,13 @@ class NewsController {
             const {id} = req.params;
             const oneNews = await News.findByPk(id);
             if (!oneNews) {
-              return res.status(404).json({ error: 'School not found' });
+              return res.status(404).json({ error: 'Новость не найдена' });
             }
-        
             await oneNews.destroy();
             return res.status(204).send();
         } catch (err) {
             console.error(err);
-            res.status(500).json({ message: 'Internal server error' });
+            res.status(500).json({ message: 'Не удалось удалить новость из базы данных' });
         }
     }
 }
