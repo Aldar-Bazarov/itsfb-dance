@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
 import { useDispatch } from 'react-redux';
-import { clearUser } from '../../slices/userSlice';
+import { clearUser } from '../../store/slices/user.slice';
 import styles from './Header.module.scss';
 
 const Header = () => {

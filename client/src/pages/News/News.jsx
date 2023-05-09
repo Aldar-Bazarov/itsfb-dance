@@ -1,56 +1,47 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import styles from './News.module.scss'
-import { ReactComponent as NewsHeroImage } from '../../assets/images/heroImageNews.svg'
+import { useDispatch, useSelector } from 'react-redux'
+import { getAllNews } from '../../api/newsApi'
+import { setNews } from '../../store/slices/news.slice'
 import { Pagination } from '../../components/Pagination/Pagination'
-import NewsService from '../../api/NewsService'
 import { getPageCount, getPagesArray } from '../../utils/pages'
-import { truncateString } from '../../utils/string'
+import NewsItem from '../../components/NewsItem/NewsItem'
+import styles from './News.module.scss'
 
 const News = () => {
-  const [news, setNews] = useState([]);
-  const [limit] = useState(3);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
+  const news = useSelector(state => state.news.news)
+  const dispatch = useDispatch();
 
-  let pagesArray = getPagesArray(totalPages);
+  const [limit] = useState(3);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const pagesArray = getPagesArray(totalPages);
+
+  const getNews = async () => {
+    const { news, totalCount } = await getAllNews(limit, currentPage);
+    dispatch(setNews(news));
+    setTotalPages(getPageCount(totalCount, limit));
+  }
 
   useEffect(() => {
-    const getNews = async () => {
-      const response = await NewsService.getAll(limit, page);
-      setNews(response.data.rows);
-      const totalCount = response.data.count;
-      setTotalPages(getPageCount(totalCount, limit));
-    }
     getNews();
-  }, [page, limit])
+  }, [currentPage, limit])
 
   return (
-    <>
-      <h1 className={styles.title}>Привет, друг!<br />Добро пожаловать на нашей хип-хоп тусе,<br />чувствуй себя как дома!</h1>
-      <NewsHeroImage className={styles.heroImage} />
+    <div className={styles.news}>
+      <h1 className={styles.title}>
+        Привет, друг!<br />Добро пожаловать на нашей хип-хоп тусе,<br />чувствуй себя как дома!
+      </h1>
+      <div className={styles.heroImage} />
       <h2 className={styles.newsTitle}>Последние новости</h2>
       <div className={styles.newsList}>
-        {news.map((oneNews) => (
-          <Link to={`news/${oneNews.id}`} className={styles.newsEl} key={oneNews.id}>
-            <div
-              className={styles.newsImage}
-              style={{ backgroundImage: `url(http://localhost:4000/${oneNews.img})` }}
-            />
-            <div className={styles.newsInfo}>
-              <h3>{truncateString(oneNews.title, 50)}</h3>
-              <p>{truncateString(oneNews.content, 300)}</p>
-              <p className={styles.newsDate}>{oneNews.createdAt.slice(0, 10).replace(/-/g, ".")}</p>
-            </div>
-          </Link>
-        ))}
+        {news?.map(oneNews => <NewsItem oneNews={oneNews} key={oneNews.id} />)}
         {
           pagesArray.length > 1 &&
-          <Pagination pagesArray={pagesArray} page={page} setPage={setPage} />
+          <Pagination pagesArray={pagesArray} page={currentPage} setPage={setCurrentPage} />
         }
       </div>
-    </>
+    </div>
   )
 }
 

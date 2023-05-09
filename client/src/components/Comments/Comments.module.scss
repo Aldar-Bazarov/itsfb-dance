@@ -1,0 +1,91 @@
+.comments {
+    margin-top: 10vh;
+    padding: 5vh;
+    background-color: #EFF1FF;
+    border-radius: 3vh;
+    width: 100%;
+
+    .title {
+        font-size: 4vh;
+        font-weight: 600;
+        text-align: left;
+    }
+
+    .form {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 5vh;
+
+        .commentInput {
+            width: 75%;
+            min-height: 12vh;
+            background-color: #F9F9F9;
+            border: 1px solid #B9B9B9;
+            padding: 2vh;
+            border-radius: 1vh;
+            font-size: 1.5vw;
+            line-height: 1.5vw;
+            // overflow-wrap: break-word;
+            font-family: sans-serif;
+            resize: none;
+        }
+
+        .commentButton {
+            width: 20%;
+            padding: 2vh;
+            font-size: 2.5vh;
+            border: 0px;
+            border-radius: 3vh;
+            background-color: #a089fd;
+            color: #FFFFFF;
+            cursor: pointer;
+
+            &:hover {
+                transform: translate(0px, -1vh);
+                transition: all 0.1s ease-in-out;
+            }
+        }
+    }
+
+    .comment {
+        background-color: #FFF;
+        border-radius: 3vh;
+        margin-top: 3vh;
+        padding: 5vh;
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        width: 100%;
+
+        .userImage {
+            width: 10%;
+            aspect-ratio: 1/1;
+            background-position: center;
+            background-size: cover;
+            border-radius: 50%;
+            border: 1vh solid #EFF1FF;
+        }
+
+        .info {
+            width: 85%;
+            display: flex;
+            flex-direction: column;
+            row-gap: 4vh;
+
+            .username {
+                font-size: 3vh;
+                font-weight: 600;
+            }
+
+            .text {
+                font-size: 2.5vh;
+            }
+
+            .date {
+                font-size: 2.5vh;
+                color: #a1a1a1;
+            }
+        }
+    }
+}

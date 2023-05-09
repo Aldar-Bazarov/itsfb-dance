@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { check } from './api/userApi';
-import { setUser } from "./slices/userSlice";
+import { setUser } from "./store/slices/user.slice";
 import RequireAuth from './hoc/RequireAuth';
 import RequireAdmin from './hoc/RequireAdmin';
 import Layout from './components/Layout/Layout';
@@ -25,12 +25,12 @@ const App = () => {
 
   useEffect(() => {
     check()
-      .then(data => { dispatch(setUser(data)); })
+      .then(data => dispatch(setUser(data)))
       .finally(() => setLoading(false));
   }, [dispatch])
 
   if (loading) {
-    return <h1>Loading...</h1>
+    return <h1 className='loading'>Loading...</h1>
   }
 
 

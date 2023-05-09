@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../../api/userApi";
-import { setUser } from "../../slices/userSlice";
+import { setUser } from "../../store/slices/user.slice";
 import styles from './Login.module.scss'
 import AuthImage from '../../assets/images/auth-image.png'
 
