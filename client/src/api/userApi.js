@@ -3,9 +3,8 @@ import jwt_decode from "jwt-decode";
 
 export const registration = async (userData) => {
     try {
-        const {data} = await $host.post('api/user/registration', userData);
-        localStorage.setItem('token', data.token);
-        return jwt_decode(data.token);
+        const response = await $host.post('api/user/registration', userData);
+        return response
     } catch (error) {
         throw error.response.data;
     }
@@ -26,6 +25,23 @@ export const check = async () => {
         const {data} = await $authHost.get('api/user/auth');
         localStorage.setItem('token', data.token);
         return jwt_decode(data.token);
+    } catch (error) {
+        throw error.response.data;
+    }
+}
+
+export const getInfo = async (email) => {
+    try {
+        const {data} = await $authHost.get(`api/user/info?email=${email}`);
+        return data;
+    } catch (error) {
+        throw error.response.data;
+    }
+}
+
+export const update = async(id, userData) => {
+    try {
+        await $authHost.put('api/user/update/'+ id, userData);
     } catch (error) {
         throw error.response.data;
     }

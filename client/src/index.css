@@ -10,3 +10,7 @@ body {
   color: #000000;
   font-style: normal;
 }
+
+a {
+  text-decoration: none;
+}

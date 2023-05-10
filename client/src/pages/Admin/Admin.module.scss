@@ -9,7 +9,7 @@
         font-weight: 600;
     }
 
-    button {
+    .adminButton {
         margin-top: 5vh;
         padding: 3vh 16vh;
         font-size: 3vh;
@@ -18,9 +18,9 @@
         background-color: #a089fd;
         box-shadow: 10px 10px 36px 0px rgba(34, 60, 80, 0.2);
         color: #FFFFFF;
+        cursor: pointer;
 
         &:hover {
-            cursor: pointer;
             transform: translate(0px, -5px);
             transition: all 0.1s ease-in-out;
         }

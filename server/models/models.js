@@ -28,15 +28,15 @@ const Event = sequelize.define('event', {
 const School = sequelize.define('school', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     name: { type: DataTypes.STRING, allowNull: false },
-    description: { type: DataTypes.TEXT, allowNull: false},
-    address: { type: DataTypes.STRING, allowNull: false},
-    photo: { type: DataTypes.STRING, allowNull: false},
-    teacherCount: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0},
-    groupCount: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0},
-    studentCount: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0},
-    phoneNumber: { type: DataTypes.STRING, allowNull: false},
-    email: { type: DataTypes.STRING, allowNull: false},
-    map: { type: DataTypes.STRING, allowNull: false},
+    description: { type: DataTypes.TEXT, allowNull: false },
+    address: { type: DataTypes.STRING, allowNull: false },
+    photo: { type: DataTypes.STRING, allowNull: false },
+    teacherCount: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
+    groupCount: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
+    studentCount: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
+    phoneNumber: { type: DataTypes.STRING, allowNull: false },
+    email: { type: DataTypes.STRING, allowNull: false },
+    map: { type: DataTypes.STRING, allowNull: false },
 });
 
 const User = sequelize.define('user', {
@@ -45,12 +45,12 @@ const User = sequelize.define('user', {
     secondname: { type: DataTypes.STRING, allowNull: false },
     email: { type: DataTypes.STRING, unique: true, allowNull: false },
     password: { type: DataTypes.STRING, allowNull: false },
-    role: { type: DataTypes.STRING, defaultValue: "USER" },
-    trains: { type: DataTypes.INTEGER, defaultValue: 0 },
-    awards: { type: DataTypes.INTEGER, defaultValue: 0 },
-    experience: { type: DataTypes.INTEGER, defaultValue: 0 },
-    motto: { type: DataTypes.STRING, defaultValue: '' },
-    target: { type: DataTypes.STRING, defaultValue: '' }
+    trains: { type: DataTypes.INTEGER, allowNull: true, defaultValue: 0 },
+    awards: { type: DataTypes.INTEGER, allowNull: true, defaultValue: 0 },
+    experience: { type: DataTypes.INTEGER, allowNull: true, defaultValue: 0 },
+    motto: { type: DataTypes.STRING, allowNull: true, defaultValue: 'Мой девиз!' },
+    target: { type: DataTypes.STRING, allowNull: true, defaultValue: 'Моя цель!' },
+    role: { type: DataTypes.STRING, defaultValue: "STUDENT" },
 });
 
 const Group = sequelize.define('group', {
@@ -64,15 +64,15 @@ const Schedule = sequelize.define('schedule', {
     time: { type: DataTypes.TIME, allowNull: false }
 })
 
-School.hasMany(Group, { foreignKey: { allowNull: false } });
-Group.belongsTo(School);
+const RegistrationSecretKey = sequelize.define('registrationSecretKey', {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    role: { type: DataTypes.STRING, allowNull: false },
+    key: { type: DataTypes.STRING, allowNull: false },
+})
 
 Group.hasMany(User);
 User.belongsTo(Group);
 Schedule.belongsTo(Group);
-
-User.hasMany(Schedule);
-Schedule.belongsTo(User);
 
 Comment.belongsTo(User);
 User.hasMany(Comment);
@@ -87,5 +87,6 @@ module.exports = {
     User,
     Event,
     Group,
-    Schedule
+    Schedule,
+    RegistrationSecretKey
 }
