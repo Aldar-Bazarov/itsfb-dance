@@ -27,7 +27,16 @@ const Event = sequelize.define('event', {
 
 const School = sequelize.define('school', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    name: { type: DataTypes.STRING, allowNull: false }
+    name: { type: DataTypes.STRING, allowNull: false },
+    description: { type: DataTypes.TEXT, allowNull: false},
+    address: { type: DataTypes.STRING, allowNull: false},
+    photo: { type: DataTypes.STRING, allowNull: false},
+    teacherCount: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0},
+    groupCount: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0},
+    studentCount: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0},
+    phoneNumber: { type: DataTypes.STRING, allowNull: false},
+    email: { type: DataTypes.STRING, allowNull: false},
+    map: { type: DataTypes.STRING, allowNull: false},
 });
 
 const User = sequelize.define('user', {
@@ -54,9 +63,6 @@ const Schedule = sequelize.define('schedule', {
     dayOfWeek: { type: DataTypes.STRING, allowNull: false },
     time: { type: DataTypes.TIME, allowNull: false }
 })
-
-School.hasMany(News);
-News.belongsTo(School);
 
 School.hasMany(Group, { foreignKey: { allowNull: false } });
 Group.belongsTo(School);

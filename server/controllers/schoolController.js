@@ -1,75 +1,79 @@
 const { School } = require('../models/models');
-const ApiError = require('../error/ApiError')
+const ApiError = require('../error/ApiError');
+const uuid = require('uuid');
+const path = require('path');
 
 class SchoolController {
     async create(req, res, next) {
         try {
-            const { name } = req.body;
-            const school = await School.create({ name });
-            return res.status(200).json({ school });
+            const schoolData = req.body;
+            
+            if (!req.files) {
+                return next(ApiError.badRequest('Изображение не загружено!'))
+            }
+            const { photo } = req.files;
+            const fileName = uuid.v4() + ".jpg";
+            await photo.mv(path.resolve(__dirname, '..', 'static', fileName));
+
+            const school = await School.create({
+                name: schoolData.name,
+                description: schoolData.description,
+                address: schoolData.address,
+                teacherCount: schoolData.teacherCount,
+                groupCount: schoolData.groupCount,
+                studentCount: schoolData.studentCount,
+                phoneNumber: schoolData.phoneNumber,
+                email: schoolData.email,
+                map: schoolData.map,
+                photo: fileName
+            });
+
+            return res.status(201).json(school);
         } catch (err) {
             console.error(err);
             return next(ApiError.internal("Ошибка: Не удалось создать школу в базе данных!"))
         }
     };
 
-    async getAll(req, res, next) {
+    async get(req, res, next) {
         try {
-            const schools = await School.findAll();
-            res.status(200).json(schools);
+            const school = await School.findOne();
+            res.status(200).json(school);
         } catch (err) {
             console.error(err);
             return next(ApiError.internal("Ошибка: Не удалось получить школы из базы данных!"))
-        }
-    }
-
-    async getOne(req, res, next) {
-        try {
-            const { id } = req.params;
-            const school = await School.findOne({ where: { id } });
-            if (school) {
-                res.status(200).json(school);
-            } else {
-                return next(ApiError.badRequest(`Ошибка: Школа с id:${id} не найдена!`))
-            }
-        } catch (err) {
-            console.error(err);
-            return next(ApiError.internal("Ошибка: Не удалось получить школы из базы данных!"))
-        }
-    }
-
-    async delete(req, res, next) {
-        try {
-            const { id } = req.params;
-            const school = await School.findByPk(id);
-            if (!school) {
-                return next(ApiError.badRequest(`Ошибка: Школа с id:${id} не найдена!`))
-            }
-            await school.destroy();
-            return res.status(204).send();
-        } catch (err) {
-            console.error(err);
-            return next(ApiError.internal("Ошибка: Не удалось удалить школу из базы данных!"))
         }
     }
 
     async update(req, res, next) {
         try {
-            const { id } = req.params;
-            const { name } = req.body;
+            const schoolData = req.body;
+            
+            if (!req.files) {
+                return next(ApiError.badRequest('Изображение не загружено!'))
+            }
+            const { photo } = req.files;
+            const fileName = uuid.v4() + ".jpg";
+            await photo.mv(path.resolve(__dirname, '..', 'static', fileName));
 
-            const school = await School.findByPk(id);
-
+            const school = await School.findOne();
             if (!school) {
-                return next(ApiError.badRequest(`Школа с id:${id} не найдена`));
+                return next(ApiError.badRequest(`Школа не найдена`));
             }
 
-            // Обновляем данные
             await school.update({
-                name: name,
+                name: schoolData.name,
+                description: schoolData.description,
+                address: schoolData.address,
+                teacherCount: schoolData.teacherCount,
+                groupCount: schoolData.groupCount,
+                studentCount: schoolData.studentCount,
+                phoneNumber: schoolData.phoneNumber,
+                email: schoolData.email,
+                map: schoolData.map,
+                photo: fileName
             });
 
-            // Сохраняем изменения в базе данных
             await school.save();
 
             return res.status(200).json(school);

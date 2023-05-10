@@ -1,11 +1,13 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { clearUser } from '../../store/slices/user.slice';
 import styles from './Header.module.scss';
 
 const Header = () => {
     const dispatch = useDispatch();
+    const user = useSelector(state => state.user);
+    const isAdmin = user.role === "ADMIN" ? true : false;
 
     const logOut = () => {
         localStorage.removeItem('token');
@@ -50,6 +52,14 @@ const Header = () => {
                     className={styles.icon}
                     id={styles.schedule}
                 />
+                {
+                    isAdmin &&
+                    <NavLink
+                        to='/admin'
+                        className={styles.icon}
+                        id={styles.admin}
+                    />
+                }
             </nav>
             <NavLink
                 to='/login'
