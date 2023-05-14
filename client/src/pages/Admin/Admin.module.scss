@@ -9,20 +9,28 @@
         font-weight: 600;
     }
 
-    .adminButton {
-        margin-top: 5vh;
-        padding: 3vh 16vh;
-        font-size: 3vh;
-        border: 0px;
-        border-radius: 3vh;
-        background-color: #a089fd;
-        box-shadow: 10px 10px 36px 0px rgba(34, 60, 80, 0.2);
-        color: #FFFFFF;
-        cursor: pointer;
+    .commands {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
 
-        &:hover {
-            transform: translate(0px, -5px);
-            transition: all 0.1s ease-in-out;
+        .adminButton {
+            display: inline-block;
+            width: 30vw;
+            margin-top: 5vh;
+            padding: 3vh 5vh;
+            font-size: 3vh;
+            border: 0px;
+            border-radius: 3vh;
+            background-color: #a089fd;
+            box-shadow: 10px 10px 36px 0px rgba(34, 60, 80, 0.2);
+            color: #FFFFFF;
+            cursor: pointer;
+    
+            &:hover {
+                transform: translate(0px, -5px);
+                transition: all 0.1s ease-in-out;
+            }
         }
     }
 }

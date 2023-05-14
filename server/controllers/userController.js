@@ -2,6 +2,8 @@ const ApiError = require('../error/ApiError');
 const { User, RegistrationSecretKey } = require('../models/models');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const uuid = require('uuid');
+const path = require('path');
 
 const generateJwt = (id, email, role, firstname, secondname) => {
   return jwt.sign(
@@ -31,16 +33,22 @@ class UserController {
       if (!existingSecretKey) {
         return next(ApiError.badRequest('Секретный ключ не подходит!'));
       }
-
-      console.log(existingSecretKey.role);
-
       const hashedPassword = await bcrypt.hash(password, 7);
+
+      let fileName = null;
+      if (req.files) {
+        const { img } = req.files;
+        fileName = uuid.v4() + ".jpg";
+        await img.mv(path.resolve(__dirname, '..', 'static', fileName));
+      }
+
       const newUser = await User.create({
         firstname,
         secondname,
         email,
         password: hashedPassword,
-        role: existingSecretKey.role
+        role: existingSecretKey.role,
+        img: fileName ? fileName : 'profile.svg',
       });
 
       const token = generateJwt(newUser.id, email, newUser.role, newUser.firstname, newUser.secondname);
@@ -105,6 +113,52 @@ class UserController {
       await user.save();
       res.status(200).json({ message: 'Свойство пользователя успешно обновлено' });
     } catch (error) {
+      console.log(err);
+      return next(ApiError.internal("Непредвиденная ошибка!"));
+    }
+  }
+
+  async updateImage(req, res, next) {
+    try {
+      if (!req.files) {
+        return next(ApiError.badRequest('Изображение не загружено!'))
+      }
+      const { id } = req.params;
+      const { img } = req.files;
+
+      const fileName = uuid.v4() + ".jpg";
+      await img.mv(path.resolve(__dirname, '..', 'static', fileName));
+
+      const user = await User.findOne({ where: { id } });
+
+      user.update({
+        ...user,
+        img: fileName
+      })
+
+      await user.save();
+      res.status(200).json({ message: 'Изображение пользователя успешно обновлено' });
+    } catch (error) {
+      console.log(err);
+      return next(ApiError.internal("Непредвиденная ошибка!"));
+    }
+  }
+
+  async getUsersByRole(req, res, next) {
+    try {
+      const { role } = req.query;
+
+      const users = await User.findAll({
+        where: { role },
+        attributes: ['id', 'firstname', 'secondname', 'groupId'],
+      });
+
+      if (!users) {
+        return next(ApiError.internal("Пользователи не найдены!"));
+      }
+
+      return res.status(200).json(users);
+    } catch (err) {
       console.log(err);
       return next(ApiError.internal("Непредвиденная ошибка!"));
     }

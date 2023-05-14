@@ -51,6 +51,7 @@ const User = sequelize.define('user', {
     motto: { type: DataTypes.STRING, allowNull: true, defaultValue: 'Мой девиз!' },
     target: { type: DataTypes.STRING, allowNull: true, defaultValue: 'Моя цель!' },
     role: { type: DataTypes.STRING, defaultValue: "STUDENT" },
+    img: { type: DataTypes.STRING, allowNull: true, defaultValue: "profile.svg" },
 });
 
 const Group = sequelize.define('group', {

@@ -1,15 +1,17 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useSelector } from "react-redux";
-import { getInfo, update } from "../../api/userApi";
+import { useDispatch, useSelector } from "react-redux";
+import { getInfo, update, updateImage } from "../../api/userApi";
 import styles from './Profile.module.scss';
+import { setUser } from "../../store/slices/user.slice";
 // import Chart from "../../components/Chart";
 
 const Profile = () => {
+  const dispatch = useDispatch()
   const user = useSelector((state) => state.user)
 
-  const [profile, setProfile] = useState(null)
   const [inputEdit, setInputEdit] = useState('')
 
+  const imageRef = useRef(null)
   const firstnameRef = useRef(null)
   const secondnameRef = useRef(null)
   const mottoRef = useRef(null)
@@ -18,8 +20,8 @@ const Profile = () => {
   const refs = [firstnameRef, secondnameRef, mottoRef, targetRef]
 
   const getProfileInfo = async () => {
-    const profile = await getInfo(user.email)
-    setProfile(profile)
+  const profile = await getInfo(user.email)
+    dispatch(setUser(profile))
   }
 
   const handleEdit = (targetRef) => {
@@ -39,18 +41,34 @@ const Profile = () => {
   }
 
   const handleSubmitEdit = async (ref) => {
-    if (ref.current) {
-      if (inputEdit.trim() === '') {
-        return;
+    try {
+      if (ref.current) {
+        if (inputEdit.trim() === '') {
+          return;
+        }
+        ref.current.classList.remove(styles.activeEdit);
+  
+        await update(user.id, {
+          property: ref.current.id,
+          value: inputEdit
+        })
+        setInputEdit('')
+        getProfileInfo()
       }
-      ref.current.classList.remove(styles.activeEdit);
-      
-      await update(user.id, {
-        property: ref.current.id,
-        value: inputEdit
-      })
-      setInputEdit('')
-      getProfileInfo()
+    } catch (error) {
+      alert(error.message)
+    }
+  }
+
+  const handleImageChange = async (event) => {
+    try {
+      const file = event.target.files[0]
+      const formData = new FormData()
+      formData.append('img', file)
+      await updateImage(user.id, formData)
+      getProfileInfo();
+    } catch (error) {
+      alert(error.message);
     }
   }
 
@@ -60,19 +78,24 @@ const Profile = () => {
 
   return (
     <> {
-      profile &&
+      user &&
       <div className={styles.profilePage}>
         <div className={styles.profileInfo}>
           <div className={styles.greeting}>
-            <h2>Привет, {profile.firstname}! 👋</h2>
+            <h2>Привет, {user.firstname}! 👋</h2>
             <h3>Рады видеть тебя снова</h3>
           </div>
           <div className={styles.profileCard}>
             <div className={styles.profileBackImage}>
-              <div className={styles.profileImage}></div>
+              <div
+                style={{backgroundImage: `url(http://localhost:4000/${user.img})`}}
+                className={styles.profileImage}
+                onClick={() => imageRef.current.click()}
+              />
+              <input type="file" className={styles.imageInput} ref={imageRef} onChange={handleImageChange} />
             </div>
             <div className={styles.name} ref={firstnameRef} id="firstname">
-              <p>{profile.firstname}</p>
+              <p>{user.firstname}</p>
               <span onClick={() => handleEdit(firstnameRef)} />
               <input
                 maxLength={15}
@@ -84,7 +107,7 @@ const Profile = () => {
               </button>
             </div>
             <div className={styles.name} ref={secondnameRef} id="secondname">
-              <p>{profile.secondname}</p>
+              <p>{user.secondname}</p>
               <span onClick={() => handleEdit(secondnameRef)} />
               <input
                 maxLength={15}
@@ -96,8 +119,8 @@ const Profile = () => {
               </button>
             </div>
             <div className={styles.trainsAndHonors}>
-              <div className={styles.trains}><span>{profile.trains}</span>Тренировки</div>
-              <div className={styles.honors}><span>{profile.awards}</span>Награды</div>
+              <div className={styles.trains}><span>{user.trains}</span>Тренировки</div>
+              <div className={styles.honors}><span>{user.awards}</span>Награды</div>
             </div>
           </div>
         </div>
@@ -105,7 +128,7 @@ const Profile = () => {
           <div className={styles.features}>
             <div className={styles.profileExperience}>
               <div></div>
-              <p>{profile.experience} XP</p>
+              <p>{user.experience} XP</p>
             </div>
             <div className={styles.motto} ref={mottoRef} id="motto">
               <span>🙌</span>
@@ -118,7 +141,7 @@ const Profile = () => {
               <button onClick={() => handleSubmitEdit(mottoRef)}>
                 Ок
               </button>
-              <p>{profile.motto}</p>
+              <p>{user.motto}</p>
             </div>
             <div className={styles.target} ref={targetRef} id="target">
               <span>🎯</span>
@@ -131,7 +154,7 @@ const Profile = () => {
               <button onClick={() => handleSubmitEdit(targetRef)}>
                 Ок
               </button>
-              <p>{profile.target}</p>
+              <p>{user.target}</p>
             </div>
           </div>
           <div className={styles.activity}>

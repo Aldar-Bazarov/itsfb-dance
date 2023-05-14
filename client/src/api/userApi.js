@@ -46,3 +46,20 @@ export const update = async(id, userData) => {
         throw error.response.data;
     }
 }
+
+export const updateImage = async(id, img) => {
+    try {
+        await $authHost.put('api/user/updateImage/'+ id, img);
+    } catch (error) {
+        throw error.response.data;
+    }
+}
+
+export const getUsersByRole = async(role) => {
+    try {
+        const {data} = await $authHost.get(`api/user/getUsersByRole?role=${role}`);
+        return data;
+    } catch (error) {
+        throw error.response.data;
+    }
+}

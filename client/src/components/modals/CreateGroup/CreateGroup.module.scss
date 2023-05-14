@@ -1,0 +1,77 @@
+.teacherSelect {
+    height: 5vh;
+    background-color: #F9F9F9;
+    border: 1px solid #B9B9B9;
+    border-radius: 0.5vw;
+    margin-bottom: 2vh;
+    font-size: 1.5vw;
+}
+
+.students {
+    background-color: #F9F9F9;
+    border: 1px solid #B9B9B9;
+    border-radius: 0.5vw;
+
+    input {
+        width: 100%;
+        background-color: #FFF;
+        border-radius: 0;
+        margin: 0;
+    }
+    
+    ul {
+        height: 20vh;
+        overflow-y: auto;
+
+        li {
+            cursor: pointer;
+            padding: 1vh;
+
+            &:hover {
+                background-color: #a089fd;
+            }
+        }
+    }
+}
+
+.chosenStudents {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1vh 0;
+    padding: 1.5vh;
+    background-color: #F9F9F9;
+    border: 1px solid #B9B9B9;
+    border-radius: 0.5vw;
+
+    span {
+        padding: 1vh 2vh;
+        font-size: 2vh;
+        border: 0px;
+        border-radius: 1vh;
+        background-color: #fd6e6e;
+        color: #FFFFFF;
+        cursor: pointer;
+    
+        &:hover {
+            background-color: #ff3f3f;
+            transition: all 0.1s ease-in-out;
+        }
+    }
+}
+
+.submitButton {
+    margin-top: 5vh;
+    padding: 3vh 16vh;
+    font-size: 3vh;
+    border: 0px;
+    border-radius: 3vh;
+    background-color: #a089fd;
+    color: #FFFFFF;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #7955fb;
+        transition: all 0.1s ease-in-out;
+    }
+}

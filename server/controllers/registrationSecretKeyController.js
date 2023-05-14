@@ -25,7 +25,7 @@ class RegistrationSecretKeyController {
             res.status(200).json(registrationSecretKey);
         } catch (err) {
             console.error(err);
-            return next(ApiError.internal({message: "Не удалось создать секретный ключ для регистрации"}));
+            return next(ApiError.internal({message: "Не удалось получить секретный ключ для регистрации"}));
         }
     }
 

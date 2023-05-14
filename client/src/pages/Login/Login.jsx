@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../../api/userApi";
 import { setUser } from "../../store/slices/user.slice";
@@ -12,15 +12,15 @@ const Login = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const location = useLocation();
-    const fromPage = location.state?.from?.pathname || '/profile';
+    // const location = useLocation();
+    // const fromPage = location.state?.from?.pathname || '/profile';
 
     const signIn = async (e, userData) => {
         e.preventDefault();
         try {
             const data = await login(userData);
             dispatch(setUser(data));
-            navigate(fromPage);
+            navigate('/profile');
         } catch (error) {
             alert(error.message)
         }

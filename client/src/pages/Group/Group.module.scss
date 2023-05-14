@@ -1,3 +1,13 @@
+.notInGroup {
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    text-align: center;
+    margin-top: 45vh;
+    font-size: 5vh;
+    font-weight: 600;
+}
+
 .group {
     display: flex;
     justify-content: space-between;
@@ -28,8 +38,8 @@
 
             .teacherPhoto {
                 position: absolute;
-                top: -40%;
-                left: 28%;
+                top: -12vh;
+                left: 7.5vw;
                 width: 20vh;
                 aspect-ratio: 1 / 1;
                 background-position: center;
@@ -37,6 +47,7 @@
                 background-size: cover;
                 border: 1vh solid #FFFFFF;
                 border-radius: 50%;
+                background-color: #FFF;
             }
 
             p {
@@ -70,7 +81,7 @@
             display: flex;
             gap: 4vh;
             flex-wrap: wrap;
-            justify-content: space-between;
+            justify-content: start;
             align-items: center;
 
             .student {
@@ -85,6 +96,11 @@
                     border-radius: 50%;
                     border: 0.5vh solid #FFFFFF;
                     margin: 0 auto;
+                    background-color: #FFF;
+
+                    &.active {
+                        border: 0.5vh solid #5036B8;
+                    }
                 }
 
                 p {

@@ -16,7 +16,7 @@
             margin-left: 5%;
 
             h2 {
-                font-size: 5vh;
+                font-size: 4vh;
                 margin: 2vh 0;
                 line-height: 7vh;
             }
@@ -49,13 +49,23 @@
                     position: absolute;
                     width: 15vh;
                     height: 15vh;
-                    background-image: url('../../assets/images/profile/profileImage.jpg');
+                    background-color: #FFF;
                     background-position: center;
                     background-repeat: no-repeat;
-                    background-size: contain;
+                    background-size: cover;
                     border-radius: 4vh;
                     left: 10%;
                     bottom: -20%;
+                    cursor: pointer;
+
+                    &:hover {
+                        opacity: 0.9;
+                    }
+                }
+
+                .imageInput {
+                    visibility: hidden;
+                    position: absolute;
                 }
             }
 
@@ -247,6 +257,7 @@
                     border: 0;
                     border-radius: 3vh;
                     margin-bottom: 1vh;
+                    font-size: 2vh;
                     padding: 0.5vh;
                     visibility: hidden;
                     position: absolute;
@@ -256,6 +267,7 @@
                     padding: 1vh;
                     border: 0px;
                     border-radius: 3vh;
+                    font-size: 2vh;
                     background-color: #a089fd;
                     color: #FFFFFF;
                     cursor: pointer;

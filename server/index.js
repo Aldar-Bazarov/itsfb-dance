@@ -6,7 +6,6 @@ const router = require('./routes/index')
 const errorHandler = require('./middleware/ErrorHandlingMiddleware')
 const fileUpload = require('express-fileupload')
 const path = require('path')
-const { Test } = require('./models/models')
 
 const PORT = process.env.PORT || 4001
 

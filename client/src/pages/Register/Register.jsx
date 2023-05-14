@@ -34,6 +34,7 @@ const Register = () => {
                     id="firstname"
                     name="firstname"
                     value={firstname}
+                    maxLength={15}
                     onChange={e => setFirstname(e.target.value)}
                 />
                 <label htmlFor="secondname">Фамилия</label>
@@ -42,6 +43,7 @@ const Register = () => {
                     type="text"
                     id="secondname"
                     name="secondname"
+                    maxLength={15}
                     value={secondname}
                     onChange={e => setSecondname(e.target.value)}
                 />
