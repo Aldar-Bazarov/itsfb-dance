@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import styles from "./Group.module.scss";
-import { faker } from '@faker-js/faker';
 import { getGroup } from "../../api/groupApi";
 import { getInfo } from "../../api/userApi";
 

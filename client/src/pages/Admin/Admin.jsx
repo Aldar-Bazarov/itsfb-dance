@@ -6,6 +6,7 @@ import CreateGroup from '../../components/modals/CreateGroup/CreateGroup'
 import styles from './Admin.module.scss'
 import AddInGroup from '../../components/modals/AddInGroup/AddInGroup'
 import DeleteGroup from '../../components/modals/DeleteGroup/DeleteGroup'
+import CreateSchedule from '../../components/modals/CreateSchedule/CreateSchedule'
 
 const Admin = () => {
   const [newsVisible, setNewsVisible] = useState(false)
@@ -14,6 +15,7 @@ const Admin = () => {
   const [createGroupVisible, setCreateGroupVisible] = useState(false)
   const [addInGroupVisible, setAddInGroupVisible] = useState(false)
   const [deleteGroupVisible, setDeleteGroupVisible] = useState(false)
+  const [scheduleVisible, setScheduleVisible] = useState(false)
 
   return (
     <div className={styles.admin}>
@@ -37,6 +39,9 @@ const Admin = () => {
         <button className={styles.adminButton} onClick={() => setDeleteGroupVisible(true)}>
           Удалить группу
         </button>
+        <button className={styles.adminButton} onClick={() => setScheduleVisible(true)}>
+          Создать расписание
+        </button>
       </div>
       {secretKeyVisible && <SecretKey active={secretKeyVisible} setActive={setSecretKeyVisible} />}
       {newsVisible && <CreateNews active={newsVisible} setActive={setNewsVisible} />}
@@ -44,6 +49,7 @@ const Admin = () => {
       {createGroupVisible && <CreateGroup active={createGroupVisible} setActive={setCreateGroupVisible} />}
       {addInGroupVisible && <AddInGroup active={addInGroupVisible} setActive={setAddInGroupVisible} />}
       {deleteGroupVisible && <DeleteGroup active={deleteGroupVisible} setActive={setDeleteGroupVisible} />}
+      {scheduleVisible && <CreateSchedule active={scheduleVisible} setActive={setScheduleVisible} />}
     </div>
   )
 }

@@ -61,8 +61,7 @@ const Group = sequelize.define('group', {
 
 const Schedule = sequelize.define('schedule', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    dayOfWeek: { type: DataTypes.STRING, allowNull: false },
-    time: { type: DataTypes.TIME, allowNull: false }
+    day: { type: DataTypes.DATEONLY, allowNull: false }
 })
 
 const RegistrationSecretKey = sequelize.define('registrationSecretKey', {
@@ -72,6 +71,7 @@ const RegistrationSecretKey = sequelize.define('registrationSecretKey', {
 })
 
 Group.hasMany(User);
+Group.hasMany(Schedule);
 User.belongsTo(Group);
 Schedule.belongsTo(Group);
 

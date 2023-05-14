@@ -7,6 +7,7 @@ const commentRouter = require('./commentRouter');
 const eventRouter = require('./eventRouter');
 const registrationSecretKeyRouter = require('./registrationSecretKeyRouter');
 const groupRouter = require('./groupRouter');
+const scheduleRouter = require('./scheduleRouter');
 
 router.use('/user', userRouter);
 router.use('/news', newsRouter);
@@ -15,5 +16,6 @@ router.use('/comment', commentRouter);
 router.use('/event', eventRouter);
 router.use('/registrationsecretkey', registrationSecretKeyRouter);
 router.use('/group', groupRouter);
+router.use('/schedule', scheduleRouter);
 
 module.exports = router;

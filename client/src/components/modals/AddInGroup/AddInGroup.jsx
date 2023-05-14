@@ -17,7 +17,7 @@ const AddInGroup = ({ active, setActive }) => {
 
     const handleSelectChange = (e) => {
         setSelectedGroup(+e.target.value);
-    };
+    }
 
     const getStudents = async () => {
         const data = await getUsersByRole("STUDENT")
