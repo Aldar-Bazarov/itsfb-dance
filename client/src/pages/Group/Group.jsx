@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import styles from "./Group.module.scss";
 import { getGroup } from "../../api/groupApi";
 import { getInfo } from "../../api/userApi";
+import styles from "./Group.module.scss";
 
 const Group = () => {
     const user = useSelector((state) => state.user)

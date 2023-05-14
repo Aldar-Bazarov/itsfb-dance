@@ -1,49 +1,72 @@
-import React, {useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import Calendar from 'react-calendar'
-import 'react-calendar/dist/Calendar.css';
-import './Schedule.scss'
-
-const dates = [
-  new Date(2023, 4, 2),
-  new Date(2023, 4, 5),
-  new Date(2023, 4, 8),
-  new Date(2023, 4, 11),
-  new Date(2023, 4, 16),
-  new Date(2023, 4, 19),
-  new Date(2023, 4, 22),
-  new Date(2023, 4, 25),
-  new Date(2023, 4, 30),
-  new Date(2023, 5, 2),
-];
-
-function isDateInArray(date, array) {
-  return array.some((d) => {
-    return d.getTime() === date.getTime();
-  });
-}
-
-const tileClassName = ({ date }) => {
-  if (isDateInArray(date, dates)) {
-    return 'selected';
-  }
-};
+import { useSelector } from "react-redux"
+import { getInfo } from "../../api/userApi"
+import { getSchedule } from '../../api/scheduleApi'
+import styles from './Schedule.module.scss'
+import 'react-calendar/dist/Calendar.css'
+import './Calendar.scss'
 
 const Schedule = () => {
-  const [value, setDate] = useState();
+  const user = useSelector((state) => state.user)
+  const [isHaveGroup, setIsHaveGroup] = useState(false)
+  const [dates, setDates] = useState([])
 
-  // const onChange = (e) => {
-  //   // alert(e)
-  // }
+  const isDateInArray = (date, array) => {
+    return array.some((d) => {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const dateString = `${year}-${month}-${day}`;
+      return dateString === d.day;
+    });
+  }
+
+  const tileClassName = ({ date }) => {
+    if (isDateInArray(date, dates)) {
+      return 'selected';
+    }
+  }
+
+  const getData = async () => {
+    try {
+      const profile = await getInfo(user.email)
+
+      if (!profile.groupId) {
+        setIsHaveGroup(false)
+        return
+      }
+      setIsHaveGroup(true)
+
+      const { rows } = await getSchedule(profile.groupId)
+      setDates(rows)
+    } catch (error) {
+      alert(error.message)
+    }
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
 
   return (
-    <div className='schedule'>
-      <h1>Моё расписание:</h1>
-      <Calendar 
-        value={value}
-        onChange={setDate}
-        tileClassName={tileClassName}
-      />
-    </div>
+    <>
+      {
+        !isHaveGroup &&
+        <div className={styles.notInGroup}>
+          Вас не добавили в группу
+        </div>
+      }
+      {
+        isHaveGroup &&
+        <div className='calendar'>
+          <h1>Моё расписание:</h1>
+          <Calendar
+            tileClassName={tileClassName}
+          />
+        </div>
+      }
+    </>
   )
 }
 

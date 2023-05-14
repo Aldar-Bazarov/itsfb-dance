@@ -18,6 +18,23 @@ class ScheduleController {
             return next(ApiError.internal("Непредвиденная ошибка!"));
         }
     }
+
+    async get(req, res, next) {
+        try {
+            const { groupId } = req.query;
+            if (!groupId) {
+                return next(ApiError.internal("Пользователь не добавлен в группу!"));
+            }
+            const schedules = await Schedule.findAndCountAll({where: {groupId}});
+            if (!schedules) {
+                return next(ApiError.internal("Расписание ешё не создано!"));
+            }
+            return res.status(201).json(schedules);
+        } catch (err) {
+            console.log(err);
+            return next(ApiError.internal("Непредвиденная ошибка!"));
+        }
+    }
 };
 
 module.exports = new ScheduleController()
