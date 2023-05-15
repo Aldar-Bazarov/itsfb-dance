@@ -23,22 +23,13 @@ const OneNews = () => {
                 <>
                     <h1>{oneNews.title}</h1>
                     <div className={styles.body}>
-                        {/* {oneNews.content} */}
-                        <div className={styles.info}>
-                            <div
-                                className={styles.newsImage}
-                                style={{ backgroundImage: `url(http://localhost:4000/${oneNews.img})` }}
-                            />
-                            <div className={styles.likesDislikes}>
-                                <span className={styles.likesImage} />
-                                <span className={styles.count}>{oneNews.likes}</span>
-                                <span className={styles.dislikesImage} />
-                                <span className={styles.count}>{oneNews.dislikes}</span>
-                            </div>
-                        </div>
+                        <img
+                            className={styles.newsImage}
+                            src={`http://localhost:4000/${oneNews.img}`}
+                        />
                         <p className={styles.content}>{oneNews.content}</p>
                     </div>
-                    <Comments newsId={id}/>
+                    <Comments newsId={id} />
                 </>
             )}
             {!oneNews && (

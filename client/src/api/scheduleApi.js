@@ -17,3 +17,18 @@ export const getSchedule = async (groupId) => {
         throw error.response.data;
     }
 }
+
+export const getOldSchedule = async (groupId, limit = 5, page = 1) => {
+    try {
+        const { data } = await $authHost.get('api/schedule/old', {
+            params: {
+                groupId,
+                limit,
+                page
+            }
+        });
+        return data;
+    } catch (error) {
+        throw error.response.data;
+    }
+}

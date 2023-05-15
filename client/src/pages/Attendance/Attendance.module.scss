@@ -1,0 +1,23 @@
+.attendance {
+    padding: 10vh;
+
+    h1 {
+        text-align: center;
+        font-size: 3vh;
+        font-weight: 600;
+    }
+
+    .days {
+        margin: 5vh 0;
+        // border: 0.2vh solid #5036B8;
+        border-radius: 2vh;
+
+        .day {
+            padding: 2vh;
+            border-bottom: 0.2vh solid #767676;
+            cursor: pointer;
+            font-size: 3vh;
+            
+        }
+    }
+}

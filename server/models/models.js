@@ -12,7 +12,10 @@ const News = sequelize.define('news', {
 
 const Comment = sequelize.define('comment', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    text: { type: DataTypes.STRING, allowNull: false }
+    text: { type: DataTypes.TEXT, allowNull: false },
+    firstname: { type: DataTypes.STRING, allowNull: false },
+    secondname: { type: DataTypes.STRING, allowNull: false },
+    userImg: { type: DataTypes.STRING, allowNull: false },
 });
 
 const Event = sequelize.define('event', {

@@ -1,5 +1,6 @@
 const ApiError = require('../error/ApiError');
 const { Schedule } = require('../models/models');
+const { Op } = require('sequelize');
 
 class ScheduleController {
     async create(req, res, next) {
@@ -33,6 +34,32 @@ class ScheduleController {
         } catch (err) {
             console.log(err);
             return next(ApiError.internal("Непредвиденная ошибка!"));
+        }
+    }
+
+    async getAllOld(req, res, next) {
+        try {
+            let { page, limit, groupId } = req.query;
+            page = page || 1;
+            limit = limit || 10;
+            let offset = page * limit - limit;
+            
+            const oldSchedule = await Schedule.findAndCountAll({
+                limit,
+                offset,
+                where: {
+                    day: {
+                      [Op.lt]: new Date(),
+                    },
+                    groupId
+                },
+                order: [['day', 'DESC']],
+            });
+
+            res.status(200).json(oldSchedule);
+        } catch (err) {
+            console.error(err);
+            return next(ApiError.internal("Ошибка: Не удалось получить расписание из базы данных!"))
         }
     }
 };

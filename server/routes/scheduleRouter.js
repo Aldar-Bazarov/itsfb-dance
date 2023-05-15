@@ -6,5 +6,6 @@ const authMiddleware = require('../middleware/authMiddleware');
 
 router.post('/', checkRole('ADMIN'), scheduleController.create);
 router.get('/', authMiddleware, scheduleController.get);
+router.get('/old', checkRole('TEACHER'), scheduleController.getAllOld);
 
 module.exports = router;

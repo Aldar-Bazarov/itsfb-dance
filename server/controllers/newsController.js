@@ -29,7 +29,11 @@ class NewsController {
             page = page || 1;
             limit = limit || 10;
             let offset = page * limit - limit;
-            const allNews = await News.findAndCountAll({limit, offset});
+            const allNews = await News.findAndCountAll({
+                limit,
+                offset,
+                order: [['createdAt', 'DESC']]
+            });
             res.status(200).json(allNews);
         } catch (err) {
             console.error(err);

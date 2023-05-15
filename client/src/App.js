@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { check } from './api/userApi';
 import { setUser } from "./store/slices/user.slice";
 import RequireAuth from './hoc/RequireAuth';
-import RequireAdmin from './hoc/RequireAdmin';
+import RequireRole from './hoc/RequireRole';
 import Layout from './components/Layout/Layout';
 import Admin from './pages/Admin/Admin';
 import News from './pages/News/News';
@@ -17,6 +17,7 @@ import Register from './pages/Register/Register';
 import Group from './pages/Group/Group';
 import Schedule from './pages/Schedule/Schedule';
 import NotFound from './pages/NotFound/NotFound';
+import Attendance from './pages/Attendance/Attendance';
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -58,9 +59,14 @@ const App = () => {
           </RequireAuth>
         } />
         <Route path='/admin' element={
-          <RequireAdmin>
+          <RequireRole role="ADMIN">
             <Admin />
-          </RequireAdmin>
+          </RequireRole>
+        } />
+        <Route path='/attendance' element={
+          <RequireRole role="TEACHER">
+            <Attendance />
+          </RequireRole>
         } />
         <Route path='*' element={<NotFound />} />
       </Route>

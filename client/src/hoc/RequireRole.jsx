@@ -1,10 +1,10 @@
 import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const RequireAdmin = ({children}) => {
+const RequireAdmin = ({children, role}) => {
     const user = useSelector((state) => state.user);
 
-    if(user.role !== "ADMIN") {
+    if(user.role !== role) {
         return <Navigate to='/'/>
     }
 

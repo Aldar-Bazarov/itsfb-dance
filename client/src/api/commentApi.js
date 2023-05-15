@@ -8,13 +8,11 @@ export const createComment = async (commentData) => {
     }
 }
 
-export const getCommentsByNewsId = async (newsId, limit = 10, page = 1) => {
+export const getCommentsByNewsId = async (newsId) => {
     try {
         const { data } = await $host.get('api/comment', {
             params: {
                 newsId,
-                limit,
-                page,
             }
         })
         return { comments: data.rows, totalCount: data.count}

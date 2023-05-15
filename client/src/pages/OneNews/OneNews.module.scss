@@ -9,58 +9,54 @@
 
     .body {
         margin-top: 5vh;
+        min-height: 40vh;
 
         .content {
             font-size: 2.5vh;
             line-height: 3.5vh;
         }
 
-        .info {
+        .newsImage {
             float: right;
             width: 45%;
+            // aspect-ratio: 1/1;
+            object-fit: contain;
             padding: 0 0 3vh 3vh;
+            max-height: 50vh;
+        }
 
-            .newsImage {
-                width: 100%;
+        .likesDislikes {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            column-gap: 2vh;
+            margin-top: 2vh;
+
+            .likesImage,
+            .dislikesImage {
+                width: 4vh;
                 aspect-ratio: 1/1;
                 background-position: center;
-                background-size: contain;
                 background-repeat: no-repeat;
+                background-size: contain;
+                cursor: pointer;
+
+                &:hover {
+                    transform: translate(0, -0.5vh);
+                    transition: all 0.1s ease-in-out;
+                }
             }
 
-            .likesDislikes {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                column-gap: 2vh;
-                margin-top: 2vh;
+            .likesImage {
+                background-image: url('../../assets/images/news/like.svg');
+            }
 
-                .likesImage,
-                .dislikesImage {
-                    width: 4vh;
-                    aspect-ratio: 1/1;
-                    background-position: center;
-                    background-repeat: no-repeat;
-                    background-size: contain;
-                    cursor: pointer;
+            .dislikesImage {
+                background-image: url('../../assets/images/news/dislike.svg');
+            }
 
-                    &:hover {
-                        transform: translate(0, -0.5vh);
-                        transition: all 0.1s ease-in-out;
-                    }
-                }
-
-                .likesImage {
-                    background-image: url('../../assets/images/news/like.svg');
-                }
-
-                .dislikesImage {
-                    background-image: url('../../assets/images/news/dislike.svg');
-                }
-
-                .count {
-                    font-size: 3vh;
-                }
+            .count {
+                font-size: 3vh;
             }
         }
     }

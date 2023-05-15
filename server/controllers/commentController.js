@@ -1,20 +1,16 @@
 const { Comment } = require('../models/models');
 const ApiError = require('../error/ApiError');
-
+const { Op } = require('sequelize');
 
 class CommentCotroller {
     async get(req, res, next) {
-        let { newsId, page, limit } = req.query;
-        page = page || 1;
-        limit = limit || 10;
-        let offset = page * limit - limit;
         try {
+            const { newsId } = req.query;
             const comments = await Comment.findAndCountAll({
-                limit,
-                offset,
                 where: {
                     newsId: newsId,
                 },
+                order: [['createdAt', 'DESC']],
             });
 
             res.status(200).json(comments);
@@ -25,18 +21,22 @@ class CommentCotroller {
 
     async create(req, res) {
         try {
-            const { newsId, text, userId } = req.body;
+            const { newsId, userId, text, firstname, secondname, userImg } = req.body;
+            console.log(req.body);
 
             const comment = await Comment.create({
-                text,
                 newsId,
-                userId
+                userId,
+                text,
+                firstname,
+                secondname,
+                userImg
             });
+
 
             res.status(201).json(comment);
         } catch (err) {
-            console.error(err);
-            res.status(500).json({ message: 'Internal server error' });
+            return next(ApiError.internal(err.message));
         }
     }
 }
