@@ -1,13 +1,23 @@
-import React, { useEffect, useState, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getInfo, update, updateImage } from "../../api/userApi";
-import styles from './Profile.module.scss';
-import { setUser } from "../../store/slices/user.slice";
-// import Chart from "../../components/Chart";
+import React, { useEffect, useState, useRef } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import * as XLSX from 'xlsx/xlsx.mjs';
+import { getInfo, update, updateImage } from "../../api/userApi"
+import { setUser } from "../../store/slices/user.slice"
+import AreaChart from "../../components/Charts/AreaChart/AreaChart"
+import BarChart from "../../components/Charts/BarChart/BarChart"
+import styles from './Profile.module.scss'
+import { faker } from '@faker-js/faker'
+
+const labels = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль']
+
+const trainingData = labels.map(() => faker.datatype.number({ min: 8, max: 14 }))
+
+const honorsData = labels.map(() => faker.datatype.number({ min: 0, max: 5 }))
 
 const Profile = () => {
   const dispatch = useDispatch()
   const user = useSelector((state) => state.user)
+  const [chartType, setChartType] = useState('Line')
 
   const [inputEdit, setInputEdit] = useState('')
 
@@ -20,7 +30,7 @@ const Profile = () => {
   const refs = [firstnameRef, secondnameRef, mottoRef, targetRef]
 
   const getProfileInfo = async () => {
-  const profile = await getInfo(user.email)
+    const profile = await getInfo(user.email)
     dispatch(setUser(profile))
   }
 
@@ -47,7 +57,7 @@ const Profile = () => {
           return;
         }
         ref.current.classList.remove(styles.activeEdit);
-  
+
         await update(user.id, {
           property: ref.current.id,
           value: inputEdit
@@ -72,6 +82,33 @@ const Profile = () => {
     }
   }
 
+  const handleChartChange = () => {
+    if (chartType === 'Line') {
+      setChartType('Bar')
+    } else {
+      setChartType('Line')
+    }
+  }
+
+  const handleExportToExcel = () => {
+    const testData = []
+
+    for (let i = 0; i < labels.length; i++) {
+      const row = {
+        Месяц: labels[i],
+        Тренировки: trainingData[i],
+        Награды: honorsData[i],
+      }
+
+      testData.push(row)
+    }
+
+    const workbook = XLSX.utils.book_new();
+    const worksheet = XLSX.utils.json_to_sheet(testData);
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Таблица №1")
+    XLSX.writeFile(workbook, "Данные.xlsx")
+  }
+
   useEffect(() => {
     getProfileInfo()
   }, [])
@@ -88,7 +125,7 @@ const Profile = () => {
           <div className={styles.profileCard}>
             <div className={styles.profileBackImage}>
               <div
-                style={{backgroundImage: `url(http://localhost:4000/${user.img})`}}
+                style={{ backgroundImage: `url(http://localhost:4000/${user.img})` }}
                 className={styles.profileImage}
                 onClick={() => imageRef.current.click()}
               />
@@ -158,7 +195,19 @@ const Profile = () => {
             </div>
           </div>
           <div className={styles.activity}>
-            {/* <Chart></Chart> */}
+            {
+              chartType === "Line"
+              ? <AreaChart labels={labels} trainingData={trainingData} honorsData={honorsData} />
+              : <BarChart labels={labels} trainingData={trainingData} honorsData={honorsData} />
+            }
+            <div>
+              <button className={styles.activityButton} onClick={handleChartChange}>
+                Поменять вид графика
+              </button>
+              <button className={styles.activityButton} onClick={handleExportToExcel}>
+                Ecxel Экспорт
+              </button>
+            </div>
           </div>
         </div>
       </div>

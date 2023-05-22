@@ -57,7 +57,7 @@ const CreateNews = ({ active, setActive }) => {
                 <label htmlFor="file" className={styles.fileUpload}>
                     {fileName || "Выберите файл"}
                 </label>
-                <button>Опубликовать</button>
+                <button className={styles.submitButton}>Опубликовать</button>
             </form>
         </Modal>
     );

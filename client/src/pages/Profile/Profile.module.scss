@@ -117,7 +117,7 @@
                     cursor: pointer;
                 }
 
-                &.activeEdit {  
+                &.activeEdit {
                     p {
                         visibility: hidden;
                         position: absolute;
@@ -126,12 +126,12 @@
                     span {
                         display: inline-block;
                     }
-    
+
                     input {
                         visibility: visible;
                         position: static;
                     }
-    
+
                     button {
                         visibility: visible;
                         position: static;
@@ -280,12 +280,12 @@
                         visibility: hidden;
                         position: absolute;
                     }
-    
+
                     input {
                         visibility: visible;
                         position: static;
                     }
-    
+
                     button {
                         visibility: visible;
                         position: static;
@@ -306,10 +306,29 @@
             height: 70%;
             background-color: #FFFFFF;
             border-radius: 5vh;
-            background-image: url('../../assets/images/profile/activity.jpg');
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: contain;
+            padding: 3vh;
+
+            div {
+                display: flex;
+                justify-content: space-between;
+                
+                .activityButton {
+                    display: inline-block;
+                    width: 10vw;
+                    padding: 1vh 3vh;
+                    font-size: 2vh;
+                    border: 0px;
+                    border-radius: 3vh;
+                    background-color: #a089fd;
+                    color: #FFFFFF;
+                    cursor: pointer;
+                    
+                    &:hover {
+                        transition: all 0.1s ease-in-out;
+                        background-color: #5036B8;
+                    }
+                }
+            }
         }
     }
 }
