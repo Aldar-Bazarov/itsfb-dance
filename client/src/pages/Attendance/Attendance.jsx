@@ -17,9 +17,9 @@ const Attendance = () => {
     const [totalPages, setTotalPages] = useState(0);
     const pagesArray = getPagesArray(totalPages);
     const [students, setStudents] = useState();
+    const [currentLesson, setCurrentLesson] = useState(null)
 
     const [studentsVisible, setStudentsVisible] = useState(false);
-    const [modalEvent, setModalEvent] = useState(null);
 
     const getSchedule = async () => {
         try {
@@ -39,8 +39,9 @@ const Attendance = () => {
         }
     }
 
-    const handleStudentsModal = () => {
-        setStudentsVisible(true);
+    const handleStudentsModal = (lessonId) => {
+        setStudentsVisible(true)
+        setCurrentLesson(lessonId)
     }
 
     useEffect(() => {
@@ -62,7 +63,7 @@ const Attendance = () => {
                     <h1>Список занятий:</h1>
                     <div className={styles.days}>
                         {schedule.map(el => (
-                            <div key={el.day} className={styles.day} onClick={handleStudentsModal}>
+                            <div key={el.id} className={styles.day} onClick={() => handleStudentsModal(el.id)}>
                                 ▪️ {el.day}
                             </div>
                         ))}
@@ -73,6 +74,7 @@ const Attendance = () => {
                             active={studentsVisible}
                             setActive={setStudentsVisible}
                             students={students}
+                            currentLesson={currentLesson}
                         />
                     }
                     {

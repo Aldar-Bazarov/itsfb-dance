@@ -163,6 +163,10 @@ class UserController {
       return next(ApiError.internal("Непредвиденная ошибка!"));
     }
   }
+
+  async getActivityData() {
+    
+  }
 };
 
 module.exports = new UserController()

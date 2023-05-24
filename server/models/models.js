@@ -73,10 +73,20 @@ const RegistrationSecretKey = sequelize.define('registrationSecretKey', {
     key: { type: DataTypes.STRING, allowNull: false },
 })
 
+const Attendance = sequelize.define('attendance', {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    presence: {type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false}
+})
+
 Group.hasMany(User);
 Group.hasMany(Schedule);
 User.belongsTo(Group);
 Schedule.belongsTo(Group);
+
+Schedule.hasMany(Attendance);
+User.hasMany(Attendance);
+Attendance.belongsTo(Schedule);
+Attendance.belongsTo(User);
 
 Comment.belongsTo(User);
 User.hasMany(Comment);
@@ -92,5 +102,6 @@ module.exports = {
     Event,
     Group,
     Schedule,
-    RegistrationSecretKey
+    RegistrationSecretKey,
+    Attendance
 }

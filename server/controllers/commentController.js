@@ -22,7 +22,6 @@ class CommentCotroller {
     async create(req, res) {
         try {
             const { newsId, userId, text, firstname, secondname, userImg } = req.body;
-            console.log(req.body);
 
             const comment = await Comment.create({
                 newsId,
